@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CogniTime Ops — cognitive-time execution maps</title>
+    <meta name="description" content="Local-first cognitive-time execution planner for leverage-ordered work maps, session metrics, and portable exports." />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <div class="eyebrow">CogniTime Ops · local-first</div>
+        <h1>Turn work into a leverage-ordered execution map.</h1>
+        <p>Enter a goal, success metric, constraints, and work items. The app classifies work into leveraged, high-density, low-density, and latent phases, then exports a plan your next session can actually use.</p>
+      </div>
+      <div class="badge">No login · no cloud · no AI key required</div>
+    </header>
+    <main class="grid">
+      <section>
+        <form id="planner-form" class="card">
+          <h2>1. Build execution map</h2>
+          <label for="goal">Goal</label>
+          <input id="goal" required value="Ship a credible first validation artifact for an engineering-ops portfolio" />
+          <label for="successMetric">Success metric</label>
+          <textarea id="successMetric" required>One cold technical user can understand the artifact, complete the primary workflow, and state whether it would save them reconstruction time.</textarea>
+          <div class="form-row">
+            <div><label for="horizon">Horizon</label><input id="horizon" value="3 focused days" /></div>
+            <div><label for="constraints">Constraints</label><input id="constraints" value="Free tools, no vendor lock-in, no unsupported traction claims" /></div>
+          </div>
+          <label for="items">Work items</label>
+          <p class="hint">One per line: title | type | minutes | leverage 1-5 | urgency 1-5 | confidence 1-5 | dependency. Types: leveraged, high_density, low_density, latent.</p>
+          <textarea id="items" required></textarea>
+          <div class="actions"><button type="submit">Generate map</button></div>
+        </form>
+        <form id="ledger-form" class="card">
+          <h2>2. Track session ledger</h2>
+          <label for="sessionLabel">Session label</label><input id="sessionLabel" required value="First artifact drafting" />
+          <div class="form-row">
+            <div><label for="sessionType">Type</label><select id="sessionType"><option value="high_density">high-density</option><option value="leveraged">leveraged</option><option value="low_density">low-density</option><option value="latent">latent</option></select></div>
+            <div><label for="sessionMinutes">Minutes</label><input id="sessionMinutes" type="number" min="1" value="45" /></div>
+            <div><label for="sessionDensity">Density</label><input id="sessionDensity" type="number" min="0" max="100" value="85" /></div>
+            <div><label for="sessionLeverage">Leverage</label><input id="sessionLeverage" type="number" min="1" max="5" value="4" /></div>
+            <div><label for="contextSwitches">Context switches</label><input id="contextSwitches" type="number" min="0" value="1" /></div>
+            <div><label for="rerampMinutes">Re-ramp minutes</label><input id="rerampMinutes" type="number" min="0" value="8" /></div>
+          </div>
+          <div class="actions"><button type="submit" class="secondary">Add session</button></div>
+        </form>
+        <section class="card">
+          <h2>3. Portable workspace</h2>
+          <div class="actions">
+            <button id="export-workspace" class="secondary" type="button">Export workspace JSON</button>
+            <label class="button secondary" for="import-workspace">Import workspace</label>
+            <input id="import-workspace" type="file" accept="application/json,.json" hidden />
+            <button id="clear-local" class="danger" type="button">Clear local data</button>
+          </div>
+        </section>
+      </section>
+      <section>
+        <div id="status">Ready. All computation runs in this browser.</div>
+        <section class="card">
+          <h2>Exports</h2>
+          <div class="actions">
+            <button type="button" class="secondary" data-export="md">Markdown</button>
+            <button type="button" class="secondary" data-export="json">JSON</button>
+            <button type="button" class="secondary" data-export="csv">CSV</button>
+            <button type="button" class="secondary" data-export="ics">Calendar ICS</button>
+          </div>
+        </section>
+        <div id="plan-output"></div>
+        <section class="card">
+          <h2>Ledger rollup</h2>
+          <div id="ledger-output"></div>
+        </section>
+      </section>
+    </main>
+    <footer>Claim boundary: deterministic planning aid only. It does not prove productivity, demand, ROI, or clinical cognitive state.</footer>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

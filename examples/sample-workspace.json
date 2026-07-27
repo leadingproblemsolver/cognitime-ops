@@ -1,0 +1,23 @@
+{
+  "plans": [
+    {
+      "schema_version": "cognitime.plan.v1",
+      "goal": "Publish one credible execution artifact",
+      "success_metric": "A cold user can complete the primary workflow without explanation",
+      "horizon": "3 days",
+      "constraints": "free tools, no vendor lock-in, honest evidence boundary",
+      "items": []
+    }
+  ],
+  "ledger": [
+    {
+      "label": "Artifact design session",
+      "type": "high_density",
+      "minutes": 55,
+      "density": 88,
+      "leverage": 4,
+      "context_switches": 1,
+      "re_ramp_minutes": 7
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+repo_contract:
+  name: cognitime-ops
+  status: finalized_release_candidate
+  one_liner: "Local-first cognitive-time execution planner that converts goals and work items into leverage-ordered plans, session metrics, and portable exports."
+
+  primary_user:
+    - founder
+    - engineer
+    - operator
+    - researcher
+
+  primary_workflow:
+    input: "goal + success metric + constraints + line-based work items"
+    processing:
+      - normalize work items
+      - classify cognitive-time type
+      - score leverage, density, urgency, confidence, time cost, and blockage
+      - group into leveraged, high-density, low-density, and latent phases
+      - compute CDS, LTR, LTF, and total/blocked minutes
+    output:
+      - execution map
+      - next action
+      - phase protocols
+      - Markdown export
+      - JSON export
+      - CSV export
+      - ICS export
+      - local workspace export
+
+  runtime:
+    type: static_browser_app
+    language: JavaScript ES modules
+    required_node_for_validation: ">=20"
+    network_required_at_runtime: false
+    credentials_required: false
+    backend_required: false
+
+  commands:
+    install: "npm ci"
+    test: "npm test"
+    build: "npm run build"
+    smoke: "npm run smoke"
+    validate: "npm run validate"
+    local_run: "npm run dev"
+
+  interfaces:
+    browser_ui: true
+    domain_module: "src/domain/cognitime.js"
+    static_dist: "dist/"
+    ci: ".github/workflows/ci.yml"
+    github_pages: ".github/workflows/deploy-pages.yml"
+
+  input_contract:
+    line_format: "title | type | minutes | leverage 1-5 | urgency 1-5 | confidence 1-5 | dependency"
+    accepted_types:
+      - leveraged
+      - high_density
+      - low_density
+      - latent
+    limits:
+      max_items: 80
+      title_max_chars: 240
+      text_control_chars: stripped
+
+  output_contract:
+    schema_version: cognitime.plan.v1
+    exports:
+      markdown: "planToMarkdown(plan)"
+      json: "JSON.stringify(plan)"
+      csv: "planToCsv(plan) with formula neutralization"
+      calendar_ics: "planToIcs(plan, optionalStartDate)"
+      workspace_json: "{ plans, ledger }"
+
+  storage:
+    mechanism: browser_localStorage
+    key: cognitime.ops.v1
+    deletion: "Clear local data button or browser storage controls"
+    encrypted: false
+
+  security:
+    secrets_in_repo: forbidden
+    frontend_provider_keys: forbidden
+    csv_formula_neutralization: true
+    telemetry: false
+    external_requests: false
+
+  deployment:
+    recommended_first_host: GitHub Pages
+    supported_static_hosts:
+      - GitHub Pages
+      - Netlify static
+      - Vercel static
+      - Cloudflare Pages
+      - Nginx/Caddy static directory
+    environment_variables: []
+
+  validation:
+    automated_tests: "node --test tests/*.test.mjs"
+    build_smoke: "node scripts/smoke.mjs"
+    acceptance_gates:
+      - generated plan has ordered phases
+      - missing required input is rejected
+      - Markdown/CSV/ICS exports are produced
+      - CSV formula-like cells are neutralized
+      - session ledger computes metrics
+      - dist contains complete static app
+
+  non_goals:
+    - automatic AI planning
+    - Supabase sync
+    - Notion publishing
+    - calendar write API
+    - billing
+    - clinical cognitive assessment
+    - productivity-gain claim
+    - adoption or ROI claim
+
+  claim_boundary: "Offline-verified local-first release candidate; live usefulness and repeat use require cold-user validation."
+
+  human_ownership_gate:
+    required_artifacts:
+      - evidence/human-ownership/architecture-reconstruction.md
+      - evidence/human-ownership/feature-change.md
+      - evidence/human-ownership/debugging-record.md
+      - evidence/human-ownership/technical-defense.md

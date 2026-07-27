@@ -1,0 +1,20 @@
+{
+  "name": "cognitime-ops",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first cognitive-time execution planner that converts goals and work items into leverage-ordered plans, session metrics, and portable exports.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "validate": "npm test && npm run build && npm run smoke"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=20"
+  }
+}
