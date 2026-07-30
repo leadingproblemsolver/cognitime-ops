@@ -1,4 +1,4 @@
-# CogniTime Ops
+# CogniFlow Ops
 
 Local-first cognitive-time execution planner for operators who need to turn an ambiguous goal into a leverage-ordered work map, track session quality, and export the result without creating a cloud account.
 
